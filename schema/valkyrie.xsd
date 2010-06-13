@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2010 Maciej Kaniewski (mk@firegnom.com).
+  
+     This program is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation; either version 3 of the License, or
+     (at your option) any later version.
+  
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+  
+     You should have received a copy of the GNU General Public License
+     along with this program; if not, write to the Free Software Foundation,
+     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+  
+     Contributors:
+      Maciej Kaniewski (mk@firegnom.com) - initial API and implementation
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:include="http://moods/2006/generation/tools/idRefResolution/includeValues/"
+	xmlns:ignore="http://moods/2006/generation/tools/idRefResolution/ignoreValues/"
+	xmlns:config="http://moods/2006/generation/tools/config"
+	xmlns:a4j="http://moods/2006/generation/tools/semanticActionsForJava"
+	xmlns:gasp="http://moods/2006/generation/tools/semanticActionsForGASP"
+	xmlns:usr="http://www.example.com/XML_MOODS" xmlns:gmr="http://www.example.com/XML_MOODS"
+	elementFormDefault="qualified" targetNamespace="http://www.example.com/XML_MOODS">
+	<xsd:import
+		namespace="http://moods/2006/generation/tools/idRefResolution/ignoreValues/"
+		schemaLocation="idRefIgnore.xsd" />
+	<xsd:import
+		namespace="http://moods/2006/generation/tools/idRefResolution/includeValues/"
+		schemaLocation="idRefInclude.xsd" />
+
+	<xsd:element name="root" type="gmr:Root" />
+	<xsd:element name="message" type="gmr:Message" />
+	<xsd:element name="Step" type="gmr:Step" />
+	<xsd:element name="Path" type="gmr:Path" />
+	<xsd:element name="playerMove" type="gmr:PlayerMove" />
+	<xsd:element name="confirmMove" type="gmr:ConfirmMove" />
+	<xsd:element name="playerDisconnected" type="gmr:PlayerDisconnected" />
+	<xsd:element name="chatMessage" type="gmr:ChatMessage" />
+	<xsd:element name="chatUserJoined" type="gmr:ChatUserJoined" />
+	<xsd:element name="chatUserLeft" type="gmr:ChatUserLeft" />
+	<xsd:element name="createUserMessage" type="gmr:CreateUserMessage" />
+	<xsd:element name="changeGameMode" type="gmr:ChangeGameMode" />
+	<xsd:element name="requestPlayerInfoMessage" type="gmr:RequestPlayerInfoMessage" />
+	<xsd:element name="requestPlayersPositionMessage" type="gmr:RequestPlayersPositionMessage" />
+	<xsd:element name="playerPositionMessage" type="gmr:PlayerPositionMessage" />
+	<xsd:element name="playerPositionsMessage" type="gmr:PlayerPositionsMessage" />
+	<xsd:element name="playerInfoMessage" type="gmr:PlayerInfoMessage" />
+	
+
+
+
+
+	<xsd:complexType name="Root">
+		<xsd:sequence>
+			<xsd:element ref="gmr:message" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Message">
+		<xsd:choice>
+			<xsd:element ref="gmr:playerMove" />
+			<xsd:element ref="gmr:playerDisconnected" />
+			<xsd:element ref="gmr:confirmMove" />
+			<xsd:element ref="gmr:chatMessage" />
+			<xsd:element ref="gmr:chatUserJoined" />
+			<xsd:element ref="gmr:chatUserLeft" />
+			<xsd:element ref="gmr:createUserMessage" />
+			<xsd:element ref="gmr:changeGameMode" />
+			<xsd:element ref="gmr:requestPlayerInfoMessage" />
+			<xsd:element ref="gmr:playerPositionMessage" />
+			<xsd:element ref="gmr:playerInfoMessage" />
+			<xsd:element ref="gmr:playerPositionsMessage" />
+			<xsd:element ref="gmr:requestPlayersPositionMessage" />
+			
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="Step">
+		<xsd:attribute name="x" type="xsd:short" use="required" />
+		<xsd:attribute name="y" type="xsd:short" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="Path">
+		<xsd:sequence>
+			<xsd:element ref="usr:Step" minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PlayerMove">
+		<xsd:attribute name="playerName" type="xsd:string" use="required" />
+		<xsd:attribute name="playerClass" type="xsd:int" use="required" />
+		<xsd:attribute name="path" type="Path" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="ConfirmMove">
+		<xsd:attribute name="id" type="xsd:short" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="PlayerDisconnected">
+		<xsd:attribute name="playerName" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="ChatMessage">
+		<xsd:attribute name="username" type="xsd:string" use="required" />
+		<xsd:attribute name="message" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="ChatUserJoined">
+		<xsd:attribute name="username" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="ChatUserLeft">
+		<xsd:attribute name="username" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="ChangeGameMode">
+		<xsd:attribute name="type" type="xsd:int" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="RequestPlayerInfoMessage">
+  </xsd:complexType>
+	
+	<xsd:complexType name="CreateUserMessage">
+	   <xsd:attribute name="playerClass" type="xsd:int" use="required" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="PlayerInfoMessage">
+	   <xsd:attribute name="playerClass" type="xsd:int" use="required" />
+	   <xsd:attribute name="zoneName" type="xsd:String" use="required" />
+	   <xsd:attribute name="position" type="PlayerPositionMessage" use="required" />
+	   <xsd:attribute name="stats" type="PlayerStats" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="PlayerPositionsMessage">
+	  <xsd:sequence>
+	    <xsd:element ref="usr:playerPositionMessage" minOccurs="1" maxOccurs="unbounded" />
+	  </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="PlayerPositionMessage">
+      <xsd:attribute name="userName" type="xsd:string" use="required" />
+      <xsd:attribute name="playerClass" type="xsd:int" use="required" />      
+      <xsd:attribute name="x" type="xsd:short" use="required" />
+      <xsd:attribute name="y" type="xsd:short" use="required" />
+  </xsd:complexType>
+  
+	<xsd:complexType name="PlayerStats">
+     <xsd:attribute name="hp" type="xsd:int" use="required" />
+     <xsd:attribute name="maxHp" type="xsd:int" use="required" />
+     <xsd:attribute name="mp" type="xsd:int" use="required" />
+     <xsd:attribute name="maxMp" type="xsd:int" use="required" />
+     <xsd:attribute name="alive" type="xsd:boolean" use="required" />
+     
+  </xsd:complexType>
+
+  <xsd:complexType name="RequestPlayersPositionMessage">
+  </xsd:complexType>
+
+
+
+</xsd:schema>
