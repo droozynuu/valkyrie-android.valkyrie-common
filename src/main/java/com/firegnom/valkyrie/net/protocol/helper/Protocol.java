@@ -1,23 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2010 Maciej Kaniewski (mk@firegnom.com).
- * 
- *    This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- * 
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software Foundation,
- *    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
- * 
- *    Contributors:
- *     Maciej Kaniewski (mk@firegnom.com) - initial API and implementation
- ******************************************************************************/
 package com.firegnom.valkyrie.net.protocol.helper;
 
 import java.io.DataInput;
@@ -48,7 +28,7 @@ import com.firegnom.valkyrie.net.protocol.client.CustomTypes;
  * The Class Protocol.
  */
 public class Protocol implements Serializable {
-
+	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -57,456 +37,6 @@ public class Protocol implements Serializable {
 
 	/** The VERSION. */
 	private static short VERSION = 7;
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final ChangeGameMode m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final ChangeGameMode m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_CHANGEGAMEMODE);
-			CustomTypes.encodeChangeGameMode(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final ChatMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final ChatMessage m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_CHATMESSAGE);
-			CustomTypes.encodeChatMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final ChatUserJoined m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final ChatUserJoined m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_CHATUSERJOINED);
-			CustomTypes.encodeChatUserJoined(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final ChatUserLeft m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final ChatUserLeft m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_CHATUSERLEFT);
-			CustomTypes.encodeChatUserLeft(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final CreateUserMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final CreateUserMessage m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_CREATEUSERMESSAGE);
-			CustomTypes.encodeCreateUserMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final PlayerDisconnected m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_PLAYERDISCONNECTED);
-			CustomTypes.encodePlayerDisconnected(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		bb.flip();
-		return bb;
-
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final PlayerInfoMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final PlayerInfoMessage m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_PLAYERINFOMESSAGE);
-			CustomTypes.encodePlayerInfoMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final PlayerMove m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Doesn't flip.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final PlayerMove m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_PLAYERMOVE);
-			CustomTypes.encodePlayerMove(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final PlayerPositionMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final PlayerPositionMessage m, final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_PLAYERPOSITIONMESSAGE);
-			CustomTypes.encodePlayerPositionMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final PlayerPositionsMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final PlayerPositionsMessage m,
-			final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_PLAYERPOSITIONSMESSAGE);
-			CustomTypes.encodePlayerPositionsMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final RequestPlayerInfoMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final RequestPlayerInfoMessage m,
-			final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_REQUESTPLAYERINFOMESSAGE);
-			CustomTypes.encodeRequestPlayerInfoMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @return the byte buffer
-	 */
-	public static ByteBuffer encode(final RequestPlayersPositionMessage m) {
-		final ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
-		encode(m, bb);
-		bb.flip();
-		return bb;
-	}
-
-	/**
-	 * Encode.
-	 * 
-	 * @param m
-	 *            the m
-	 * @param bb
-	 *            the bb
-	 */
-	public static void encode(final RequestPlayersPositionMessage m,
-			final ByteBuffer bb) {
-		final DataOutput dos = new ByteBufferDataOutput(bb);
-		try {
-			dos.writeShort(Protocol.VERSION);
-			dos.writeShort(1);
-			dos.writeByte(CustomTypes.TYPE_REQUESTPLAYERSPOSITIONMESSAGE);
-			CustomTypes.encodeRequestPlayersPositionMessage(dos, m);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/** The listener. */
 	private MessageListener listener;
@@ -520,100 +50,421 @@ public class Protocol implements Serializable {
 
 	/**
 	 * Instantiates a new protocol.
-	 * 
-	 * @param ml
-	 *            the ml
+	 *
+	 * @param ml the ml
 	 */
-	public Protocol(final MessageListener ml) {
+	public Protocol(MessageListener ml) {
 		listener = ml;
 	}
 
 	/**
-	 * Decode.
-	 * 
-	 * @param bb
-	 *            the bb
+	 * Doesn't flip.
+	 *
+	 * @param m the m
+	 * @param bb the bb
 	 */
-	public void decode(final ByteBuffer bb) {
-
-		final DataInput dis = new ByteBufferDataInput(bb);
+	public static void encode(PlayerMove m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
 		try {
-
-			final short ver = dis.readShort();
-			short nb = dis.readShort();
-			while (nb != 0) {
-				final byte type = dis.readByte();
-				if (type == CustomTypes.TYPE_PLAYERMOVE) {
-					final PlayerMove customType = CustomTypes
-							.decodePlayerMove(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CONFIRMMOVE) {
-					final ConfirmMove customType = CustomTypes
-							.decodeConfirmMove(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_PLAYERDISCONNECTED) {
-					final PlayerDisconnected customType = CustomTypes
-							.decodePlayerDisconnected(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CHATMESSAGE) {
-					final ChatMessage customType = CustomTypes
-							.decodeChatMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CHATUSERJOINED) {
-					final ChatUserJoined customType = CustomTypes
-							.decodeChatUserJoined(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CHATUSERLEFT) {
-					final ChatUserLeft customType = CustomTypes
-							.decodeChatUserLeft(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CREATEUSERMESSAGE) {
-					final CreateUserMessage customType = CustomTypes
-							.decodeCreateUserMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_CHANGEGAMEMODE) {
-					final ChangeGameMode customType = CustomTypes
-							.decodeChangeGameMode(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_PLAYERPOSITIONMESSAGE) {
-					final PlayerPositionMessage customType = CustomTypes
-							.decodePlayerPositionMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_REQUESTPLAYERINFOMESSAGE) {
-					final RequestPlayerInfoMessage customType = CustomTypes
-							.decodeRequestPlayerInfoMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_PLAYERINFOMESSAGE) {
-					final PlayerInfoMessage customType = CustomTypes
-							.decodePlayerInfoMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_PLAYERPOSITIONSMESSAGE) {
-					final PlayerPositionsMessage customType = CustomTypes
-							.decodePlayerPositionsMessage(dis);
-					listener.received(customType);
-				}
-				if (type == CustomTypes.TYPE_REQUESTPLAYERSPOSITIONMESSAGE) {
-					final RequestPlayersPositionMessage customType = CustomTypes
-							.decodeRequestPlayersPositionMessage(dis);
-					listener.received(customType);
-				}
-				nb--;
-			}
-		} catch (final IOException e) {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_PLAYERMOVE);
+			CustomTypes.encodePlayerMove(dos, m);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (final Exception e) {
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(PlayerMove m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(ChatMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_CHATMESSAGE);
+			CustomTypes.encodeChatMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(ChatMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(ChatUserLeft m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(ChatUserLeft m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_CHATUSERLEFT);
+			CustomTypes.encodeChatUserLeft(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(ChatUserJoined m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(ChatUserJoined m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_CHATUSERJOINED);
+			CustomTypes.encodeChatUserJoined(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(ChangeGameMode m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(ChangeGameMode m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_CHANGEGAMEMODE);
+			CustomTypes.encodeChangeGameMode(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(CreateUserMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(CreateUserMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_CREATEUSERMESSAGE);
+			CustomTypes.encodeCreateUserMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(PlayerDisconnected m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_PLAYERDISCONNECTED);
+			CustomTypes.encodePlayerDisconnected(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bb.flip();
+		return bb;
+
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(PlayerPositionMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(PlayerPositionMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_PLAYERPOSITIONMESSAGE);
+			CustomTypes.encodePlayerPositionMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(RequestPlayerInfoMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(RequestPlayerInfoMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_REQUESTPLAYERINFOMESSAGE);
+			CustomTypes.encodeRequestPlayerInfoMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(PlayerInfoMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(PlayerInfoMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_PLAYERINFOMESSAGE);
+			CustomTypes.encodePlayerInfoMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(PlayerPositionsMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(PlayerPositionsMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_PLAYERPOSITIONSMESSAGE);
+			CustomTypes.encodePlayerPositionsMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @return the byte buffer
+	 */
+	public static ByteBuffer encode(RequestPlayersPositionMessage m) {
+		ByteBuffer bb = ByteBuffer.allocate(MAX_MESSAGE_SIZE);
+		encode(m, bb);
+		bb.flip();
+		return bb;
+	}
+
+	/**
+	 * Encode.
+	 *
+	 * @param m the m
+	 * @param bb the bb
+	 */
+	public static void encode(RequestPlayersPositionMessage m, ByteBuffer bb) {
+		DataOutput dos = new ByteBufferDataOutput(bb);
+		try {
+			dos.writeShort(Protocol.VERSION);
+			dos.writeShort(1);
+			dos.writeByte(CustomTypes.TYPE_REQUESTPLAYERSPOSITIONMESSAGE);
+			CustomTypes.encodeRequestPlayersPositionMessage(dos, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -621,11 +472,97 @@ public class Protocol implements Serializable {
 
 	/**
 	 * Register message listener.
-	 * 
-	 * @param ml
-	 *            the ml
+	 *
+	 * @param ml the ml
 	 */
-	public void registerMessageListener(final MessageListener ml) {
+	public void registerMessageListener(MessageListener ml) {
 		listener = ml;
+	}
+
+	/**
+	 * Decode.
+	 *
+	 * @param bb the bb
+	 */
+	public void decode(ByteBuffer bb) {
+
+		DataInput dis = new ByteBufferDataInput(bb);
+		try {
+
+			short ver = dis.readShort();
+			short nb = dis.readShort();
+			while (nb != 0) {
+				byte type = dis.readByte();
+				if (type == CustomTypes.TYPE_PLAYERMOVE) {
+					PlayerMove customType = CustomTypes.decodePlayerMove(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CONFIRMMOVE) {
+					ConfirmMove customType = CustomTypes.decodeConfirmMove(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_PLAYERDISCONNECTED) {
+					PlayerDisconnected customType = CustomTypes
+							.decodePlayerDisconnected(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CHATMESSAGE) {
+					ChatMessage customType = CustomTypes.decodeChatMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CHATUSERJOINED) {
+					ChatUserJoined customType = CustomTypes
+							.decodeChatUserJoined(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CHATUSERLEFT) {
+					ChatUserLeft customType = CustomTypes
+							.decodeChatUserLeft(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CREATEUSERMESSAGE) {
+					CreateUserMessage customType = CustomTypes
+							.decodeCreateUserMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_CHANGEGAMEMODE) {
+					ChangeGameMode customType = CustomTypes
+							.decodeChangeGameMode(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_PLAYERPOSITIONMESSAGE) {
+					PlayerPositionMessage customType = CustomTypes
+							.decodePlayerPositionMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_REQUESTPLAYERINFOMESSAGE) {
+					RequestPlayerInfoMessage customType = CustomTypes
+							.decodeRequestPlayerInfoMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_PLAYERINFOMESSAGE) {
+					PlayerInfoMessage customType = CustomTypes
+							.decodePlayerInfoMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_PLAYERPOSITIONSMESSAGE) {
+					PlayerPositionsMessage customType = CustomTypes
+							.decodePlayerPositionsMessage(dis);
+					listener.received(customType);
+				}
+				if (type == CustomTypes.TYPE_REQUESTPLAYERSPOSITIONMESSAGE) {
+					RequestPlayersPositionMessage customType = CustomTypes
+							.decodeRequestPlayersPositionMessage(dis);
+					listener.received(customType);
+				}
+				nb--;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

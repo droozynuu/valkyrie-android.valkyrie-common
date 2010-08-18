@@ -1,23 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2010 Maciej Kaniewski (mk@firegnom.com).
- * 
- *    This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- * 
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software Foundation,
- *    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
- * 
- *    Contributors:
- *     Maciej Kaniewski (mk@firegnom.com) - initial API and implementation
- ******************************************************************************/
 //   Rectangle.java
 //   Java Spatial Index Library
 //   Copyright (C) 2002 Infomatiq Limited
@@ -54,16 +34,10 @@ public class Rectangle {
 	 */
 	public final static int DIMENSIONS = 2;
 
-	/**
-	 * array containing the minimum value for each dimension; ie { min(x),
-	 * min(y) }.
-	 */
+	/** array containing the minimum value for each dimension; ie { min(x), min(y) }. */
 	public float[] max;
 
-	/**
-	 * array containing the maximum value for each dimension; ie { max(x),
-	 * max(y) }.
-	 */
+	/** array containing the maximum value for each dimension; ie { max(x), max(y) }. */
 	public float[] min;
 
 	/**
@@ -78,8 +52,7 @@ public class Rectangle {
 	 * @param y2
 	 *            (see x2)
 	 */
-	public Rectangle(final float x1, final float y1, final float x2,
-			final float y2) {
+	public Rectangle(float x1, float y1, float x2, float y2) {
 		min = new float[DIMENSIONS];
 		max = new float[DIMENSIONS];
 		set(x1, y1, x2, y2);
@@ -95,7 +68,7 @@ public class Rectangle {
 	 *            array containing the maximum value for each dimension; ie {
 	 *            max(x), max(y) }
 	 */
-	public Rectangle(final float[] min, final float[] max) {
+	public Rectangle(float[] min, float[] max) {
 		if (min.length != DIMENSIONS || max.length != DIMENSIONS) {
 			throw new RuntimeException("Error in Rectangle constructor: "
 					+ "min and max arrays must be of length " + DIMENSIONS);
@@ -108,43 +81,75 @@ public class Rectangle {
 	}
 
 	/**
-	 * Computes the union of this rectangle and the passed rectangle, storing
-	 * the result in this rectangle.
+	 * Sets the size of the rectangle.
 	 * 
-	 * @param r
-	 *            Rectangle to add to this rectangle
+	 * @param x1
+	 *            coordinate of any corner of the rectangle
+	 * @param y1
+	 *            (see x1)
+	 * @param x2
+	 *            coordinate of the opposite corner
+	 * @param y2
+	 *            (see x2)
 	 */
-	public void add(final Rectangle r) {
+	public void set(float x1, float y1, float x2, float y2) {
+		min[0] = Math.min(x1, x2);
+		min[1] = Math.min(y1, y2);
+		max[0] = Math.max(x1, x2);
+		max[1] = Math.max(y1, y2);
+	}
+
+	/**
+	 * Sets the size of the rectangle.
+	 * 
+	 * @param min
+	 *            array containing the minimum value for each dimension; ie {
+	 *            min(x), min(y) }
+	 * @param max
+	 *            array containing the maximum value for each dimension; ie {
+	 *            max(x), max(y) }
+	 */
+	public void set(float[] min, float[] max) {
+		System.arraycopy(min, 0, this.min, 0, DIMENSIONS);
+		System.arraycopy(max, 0, this.max, 0, DIMENSIONS);
+	}
+
+	/**
+	 * Make a copy of this rectangle.
+	 *
+	 * @return copy of this rectangle
+	 */
+	public Rectangle copy() {
+		return new Rectangle(min, max);
+	}
+
+	/**
+	 * Determine whether an edge of this rectangle overlies the equivalent edge
+	 * of the passed rectangle.
+	 *
+	 * @param r the r
+	 * @return true, if successful
+	 */
+	public boolean edgeOverlaps(Rectangle r) {
 		for (int i = 0; i < DIMENSIONS; i++) {
-			if (r.min[i] < min[i]) {
-				min[i] = r.min[i];
-			}
-			if (r.max[i] > max[i]) {
-				max[i] = r.max[i];
+			if (min[i] == r.min[i] || max[i] == r.max[i]) {
+				return true;
 			}
 		}
+		return false;
 	}
 
 	/**
-	 * Compute the area of this rectangle.
-	 * 
-	 * @return The area of this rectangle
+	 * Determine whether this rectangle intersects the passed rectangle.
+	 *
+	 * @param r The rectangle that might intersect this rectangle
+	 * @return true if the rectangles intersect, false if they do not intersect
 	 */
-	public float area() {
-		return (max[0] - min[0]) * (max[1] - min[1]);
-	}
-
-	/**
-	 * Determine whether this rectangle is contained by the passed rectangle.
-	 * 
-	 * @param r
-	 *            The rectangle that might contain this rectangle
-	 * @return true if the passed rectangle contains this rectangle, false if it
-	 *         does not
-	 */
-	public boolean containedBy(final Rectangle r) {
+	public boolean intersects(Rectangle r) {
+		// Every dimension must intersect. If any dimension
+		// does not intersect, return false immediately.
 		for (int i = 0; i < DIMENSIONS; i++) {
-			if (max[i] > r.max[i] || min[i] < r.min[i]) {
+			if (max[i] < r.min[i] || min[i] > r.max[i]) {
 				return false;
 			}
 		}
@@ -153,13 +158,12 @@ public class Rectangle {
 
 	/**
 	 * Determine whether this rectangle contains the passed rectangle.
-	 * 
-	 * @param r
-	 *            The rectangle that might be contained by this rectangle
+	 *
+	 * @param r The rectangle that might be contained by this rectangle
 	 * @return true if this rectangle contains the passed rectangle, false if it
-	 *         does not
+	 * does not
 	 */
-	public boolean contains(final Rectangle r) {
+	public boolean contains(Rectangle r) {
 		for (int i = 0; i < DIMENSIONS; i++) {
 			if (max[i] < r.max[i] || min[i] > r.min[i]) {
 				return false;
@@ -169,12 +173,19 @@ public class Rectangle {
 	}
 
 	/**
-	 * Make a copy of this rectangle.
-	 * 
-	 * @return copy of this rectangle
+	 * Determine whether this rectangle is contained by the passed rectangle.
+	 *
+	 * @param r The rectangle that might contain this rectangle
+	 * @return true if the passed rectangle contains this rectangle, false if it
+	 * does not
 	 */
-	public Rectangle copy() {
-		return new Rectangle(min, max);
+	public boolean containedBy(Rectangle r) {
+		for (int i = 0; i < DIMENSIONS; i++) {
+			if (max[i] > r.max[i] || min[i] < r.min[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -186,11 +197,11 @@ public class Rectangle {
 	 * 
 	 * @return distance beween this rectangle and the passed point.
 	 */
-	public float distance(final Point p) {
+	public float distance(Point p) {
 		float distanceSquared = 0;
 		for (int i = 0; i < DIMENSIONS; i++) {
-			final float greatestMin = Math.max(min[i], p.coordinates[i]);
-			final float leastMax = Math.min(max[i], p.coordinates[i]);
+			float greatestMin = Math.max(min[i], p.coordinates[i]);
+			float leastMax = Math.min(max[i], p.coordinates[i]);
 			if (greatestMin > leastMax) {
 				distanceSquared += ((greatestMin - leastMax) * (greatestMin - leastMax));
 			}
@@ -208,11 +219,11 @@ public class Rectangle {
 	 * @return distance between this rectangle and the passed rectangle
 	 */
 
-	public float distance(final Rectangle r) {
+	public float distance(Rectangle r) {
 		float distanceSquared = 0;
 		for (int i = 0; i < DIMENSIONS; i++) {
-			final float greatestMin = Math.max(min[i], r.min[i]);
-			final float leastMax = Math.min(max[i], r.max[i]);
+			float greatestMin = Math.max(min[i], r.min[i]);
+			float leastMax = Math.min(max[i], r.max[i]);
 			if (greatestMin > leastMax) {
 				distanceSquared += ((greatestMin - leastMax) * (greatestMin - leastMax));
 			}
@@ -222,14 +233,12 @@ public class Rectangle {
 
 	/**
 	 * Return the squared distance from this rectangle to the passed point.
-	 * 
-	 * @param dimension
-	 *            the dimension
-	 * @param point
-	 *            the point
+	 *
+	 * @param dimension the dimension
+	 * @param point the point
 	 * @return the float
 	 */
-	private float distanceSquared(final int dimension, final float point) {
+	private float distanceSquared(int dimension, float point) {
 		float distanceSquared = 0;
 		float tempDistance = point - max[dimension];
 		for (int i = 0; i < 2; i++) {
@@ -243,71 +252,16 @@ public class Rectangle {
 	}
 
 	/**
-	 * Determine whether an edge of this rectangle overlies the equivalent edge
-	 * of the passed rectangle.
-	 * 
-	 * @param r
-	 *            the r
-	 * @return true, if successful
-	 */
-	public boolean edgeOverlaps(final Rectangle r) {
-		for (int i = 0; i < DIMENSIONS; i++) {
-			if (min[i] == r.min[i] || max[i] == r.max[i]) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Calculate the area by which this rectangle would be enlarged if added to
-	 * the passed rectangle. Neither rectangle is altered.
-	 * 
-	 * @param r
-	 *            Rectangle to union with this rectangle, in order to compute
-	 *            the difference in area of the union and the original rectangle
-	 * @return the float
-	 */
-	public float enlargement(final Rectangle r) {
-		final float enlargedArea = (Math.max(max[0], r.max[0]) - Math.min(
-				min[0], r.min[0]))
-				* (Math.max(max[1], r.max[1]) - Math.min(min[1], r.min[1]));
-
-		return enlargedArea - area();
-	}
-
-	/**
-	 * Determine whether this rectangle is equal to a given object. Equality is
-	 * determined by the bounds of the rectangle.
-	 * 
-	 * @param o
-	 *            the o
-	 * @return true, if successful
-	 */
-	@Override
-	public boolean equals(final Object o) {
-		boolean equals = false;
-		if (o instanceof Rectangle) {
-			final Rectangle r = (Rectangle) o;
-			if (Arrays.equals(r.min, min) && Arrays.equals(r.max, max)) {
-				equals = true;
-			}
-		}
-		return equals;
-	}
-
-	/**
 	 * Return the furthst possible distance between this rectangle and the
 	 * passed rectangle.
 	 * 
 	 * Find the distance between this rectangle and each corner of the passed
 	 * rectangle, and use the maximum.
-	 * 
-	 * @param r
-	 *            the r
+	 *
+	 * @param r the r
 	 * @return the float
 	 */
-	public float furthestDistance(final Rectangle r) {
+	public float furthestDistance(Rectangle r) {
 		float distanceSquared = 0;
 
 		for (int i = 0; i < DIMENSIONS; i++) {
@@ -319,21 +273,78 @@ public class Rectangle {
 	}
 
 	/**
-	 * Determine whether this rectangle intersects the passed rectangle.
+	 * Calculate the area by which this rectangle would be enlarged if added to
+	 * the passed rectangle. Neither rectangle is altered.
+	 *
+	 * @param r Rectangle to union with this rectangle, in order to compute
+	 * the difference in area of the union and the original rectangle
+	 * @return the float
+	 */
+	public float enlargement(Rectangle r) {
+		float enlargedArea = (Math.max(max[0], r.max[0]) - Math.min(min[0],
+				r.min[0]))
+				* (Math.max(max[1], r.max[1]) - Math.min(min[1], r.min[1]));
+
+		return enlargedArea - area();
+	}
+
+	/**
+	 * Compute the area of this rectangle.
+	 * 
+	 * @return The area of this rectangle
+	 */
+	public float area() {
+		return (max[0] - min[0]) * (max[1] - min[1]);
+	}
+
+	/**
+	 * Computes the union of this rectangle and the passed rectangle, storing
+	 * the result in this rectangle.
 	 * 
 	 * @param r
-	 *            The rectangle that might intersect this rectangle
-	 * @return true if the rectangles intersect, false if they do not intersect
+	 *            Rectangle to add to this rectangle
 	 */
-	public boolean intersects(final Rectangle r) {
-		// Every dimension must intersect. If any dimension
-		// does not intersect, return false immediately.
+	public void add(Rectangle r) {
 		for (int i = 0; i < DIMENSIONS; i++) {
-			if (max[i] < r.min[i] || min[i] > r.max[i]) {
-				return false;
+			if (r.min[i] < min[i]) {
+				min[i] = r.min[i];
+			}
+			if (r.max[i] > max[i]) {
+				max[i] = r.max[i];
 			}
 		}
-		return true;
+	}
+
+	/**
+	 * Find the the union of this rectangle and the passed rectangle. Neither
+	 * rectangle is altered
+	 *
+	 * @param r The rectangle to union with this rectangle
+	 * @return the rectangle
+	 */
+	public Rectangle union(Rectangle r) {
+		Rectangle union = this.copy();
+		union.add(r);
+		return union;
+	}
+
+	/**
+	 * Determine whether this rectangle is equal to a given object. Equality is
+	 * determined by the bounds of the rectangle.
+	 *
+	 * @param o the o
+	 * @return true, if successful
+	 */
+	@Override
+	public boolean equals(Object o) {
+		boolean equals = false;
+		if (o instanceof Rectangle) {
+			Rectangle r = (Rectangle) o;
+			if (Arrays.equals(r.min, min) && Arrays.equals(r.max, max)) {
+				equals = true;
+			}
+		}
+		return equals;
 	}
 
 	/**
@@ -341,48 +352,12 @@ public class Rectangle {
 	 * 
 	 * Note that two rectangles can be equal but not the same object, if they
 	 * both have the same bounds.
-	 * 
-	 * @param o
-	 *            The object to compare with this rectangle.
+	 *
+	 * @param o The object to compare with this rectangle.
 	 * @return true, if successful
 	 */
-	public boolean sameObject(final Object o) {
+	public boolean sameObject(Object o) {
 		return super.equals(o);
-	}
-
-	/**
-	 * Sets the size of the rectangle.
-	 * 
-	 * @param x1
-	 *            coordinate of any corner of the rectangle
-	 * @param y1
-	 *            (see x1)
-	 * @param x2
-	 *            coordinate of the opposite corner
-	 * @param y2
-	 *            (see x2)
-	 */
-	public void set(final float x1, final float y1, final float x2,
-			final float y2) {
-		min[0] = Math.min(x1, x2);
-		min[1] = Math.min(y1, y2);
-		max[0] = Math.max(x1, x2);
-		max[1] = Math.max(y1, y2);
-	}
-
-	/**
-	 * Sets the size of the rectangle.
-	 * 
-	 * @param min
-	 *            array containing the minimum value for each dimension; ie {
-	 *            min(x), min(y) }
-	 * @param max
-	 *            array containing the maximum value for each dimension; ie {
-	 *            max(x), max(y) }
-	 */
-	public void set(final float[] min, final float[] max) {
-		System.arraycopy(min, 0, this.min, 0, DIMENSIONS);
-		System.arraycopy(max, 0, this.max, 0, DIMENSIONS);
 	}
 
 	/**
@@ -393,7 +368,7 @@ public class Rectangle {
 	 */
 	@Override
 	public String toString() {
-		final StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer();
 
 		// min coordinates
 		sb.append('(');
@@ -414,19 +389,5 @@ public class Rectangle {
 		}
 		sb.append(')');
 		return sb.toString();
-	}
-
-	/**
-	 * Find the the union of this rectangle and the passed rectangle. Neither
-	 * rectangle is altered
-	 * 
-	 * @param r
-	 *            The rectangle to union with this rectangle
-	 * @return the rectangle
-	 */
-	public Rectangle union(final Rectangle r) {
-		final Rectangle union = this.copy();
-		union.add(r);
-		return union;
 	}
 }

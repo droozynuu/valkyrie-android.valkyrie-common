@@ -1,23 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2010 Maciej Kaniewski (mk@firegnom.com).
- * 
- *    This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- * 
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software Foundation,
- *    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
- * 
- *    Contributors:
- *     Maciej Kaniewski (mk@firegnom.com) - initial API and implementation
- ******************************************************************************/
 package com.firegnom.valkyrie.net;
 
 import java.io.File;
@@ -47,51 +27,69 @@ public class Download extends Observable {
 	// These are the status codes.
 	/** The Constant DOWNLOADING. */
 	public static final int DOWNLOADING = 0;
-
+	
 	/** The Constant PAUSED. */
 	public static final int PAUSED = 1;
-
+	
 	/** The Constant COMPLETE. */
 	public static final int COMPLETE = 2;
-
+	
 	/** The Constant CANCELLED. */
 	public static final int CANCELLED = 3;
-
+	
 	/** The Constant ERROR. */
 	public static final int ERROR = 4;
-
+	
 	/** The Constant ERROR_FILE_EXIST. */
 	public static final int ERROR_FILE_EXIST = 5;
 
 	/** The url. */
-	private final URL url; // download URL
-
+	private URL url; // download URL
+	
 	/** The size. */
 	private int size; // size of download in bytes
-
+	
 	/** The downloaded. */
 	private int downloaded; // number of bytes downloaded
-
+	
 	/** The status. */
 	private int status; // current status of download
-
+	
 	/** The overwrite. */
-	private final boolean overwrite; // current status of download
+	private boolean overwrite; // current status of download
 
 	/** The path. */
 	private String path;
 
 	/**
-	 * Instantiates a new download.
-	 * 
-	 * @param url
-	 *            the url
-	 * @param path
-	 *            the path
-	 * @param overwrite
-	 *            the overwrite
+	 * Gets the path.
+	 *
+	 * @return the path
 	 */
-	public Download(final URL url, final String path, final boolean overwrite) {
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * Sets the path.
+	 *
+	 * @param path the new path
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	// Constructor for Download.
+	/**
+	 * Instantiates a new download.
+	 *
+	 * @param url the url
+	 * @param path the path
+	 * @param overwrite the overwrite
+	 * @param o the o
+	 */
+	public Download(URL url, String path, boolean overwrite, Observer o) {
+		addObserver(o);
 		this.url = url;
 		this.path = path;
 		size = -1;
@@ -100,28 +98,79 @@ public class Download extends Observable {
 		this.overwrite = overwrite;
 	}
 
-	// Constructor for Download.
 	/**
 	 * Instantiates a new download.
-	 * 
-	 * @param url
-	 *            the url
-	 * @param path
-	 *            the path
-	 * @param overwrite
-	 *            the overwrite
-	 * @param o
-	 *            the o
+	 *
+	 * @param url the url
+	 * @param path the path
+	 * @param overwrite the overwrite
 	 */
-	public Download(final URL url, final String path, final boolean overwrite,
-			final Observer o) {
-		addObserver(o);
+	public Download(URL url, String path, boolean overwrite) {
 		this.url = url;
 		this.path = path;
 		size = -1;
 		downloaded = 0;
 		status = DOWNLOADING;
 		this.overwrite = overwrite;
+	}
+
+	// Get this download's URL.
+	/**
+	 * Gets the url.
+	 *
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url.toString();
+	}
+
+	// Get this download's size.
+	/**
+	 * Gets the size.
+	 *
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	// Get this download's progress.
+	/**
+	 * Gets the progress.
+	 *
+	 * @return the progress
+	 */
+	public float getProgress() {
+		return ((float) downloaded / size) * 100;
+	}
+
+	// Get this download's status.
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	// Pause this download.
+	/**
+	 * Pause.
+	 */
+	public void pause() {
+		status = PAUSED;
+		stateChanged();
+	}
+
+	// Resume this download.
+	/**
+	 * Resume.
+	 */
+	public void resume() {
+		status = DOWNLOADING;
+		stateChanged();
+		download();
 	}
 
 	// Cancel this download.
@@ -133,10 +182,31 @@ public class Download extends Observable {
 		stateChanged();
 	}
 
+	// Mark this download as having an error.
+	/**
+	 * Error.
+	 */
+	private void error() {
+		status = ERROR;
+		stateChanged();
+	}
+
+	// Get file name portion of URL.
+	/**
+	 * Gets the file name.
+	 *
+	 * @param url the url
+	 * @return the file name
+	 */
+	private String getFileName(URL url) {
+		String fileName = url.getFile();
+		return fileName.substring(fileName.lastIndexOf('/') + 1);
+	}
+
 	// Download file.
 	/**
 	 * Download.
-	 * 
+	 *
 	 * @return true, if successful
 	 */
 	public boolean download() {
@@ -144,7 +214,7 @@ public class Download extends Observable {
 		InputStream stream = null;
 
 		try {
-			final File newf = new File(path + getFileName(url));
+			File newf = new File(path + getFileName(url));
 			if (newf.exists()) {
 				if (overwrite) {
 					newf.delete();
@@ -155,7 +225,7 @@ public class Download extends Observable {
 				}
 			}
 			// Open connection to URL.
-			final HttpURLConnection connection = (HttpURLConnection) url
+			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
 			connection.setUseCaches(false);
 			// Specify what portion of file to download.
@@ -170,7 +240,7 @@ public class Download extends Observable {
 			}
 
 			// Check for valid content length.
-			final int contentLength = connection.getContentLength();
+			int contentLength = connection.getContentLength();
 			if (contentLength < 1) {
 				error();
 			}
@@ -201,7 +271,7 @@ public class Download extends Observable {
 				}
 
 				// Read from server into buffer.
-				final int read = stream.read(buffer);
+				int read = stream.read(buffer);
 				if (read == -1) {
 					break;
 				}
@@ -212,7 +282,7 @@ public class Download extends Observable {
 				stateChanged();
 			}
 
-			final File f = new File(path + getFileName(url) + ".tmp");
+			File f = new File(path + getFileName(url) + ".tmp");
 
 			f.renameTo(newf);
 			/*
@@ -223,14 +293,14 @@ public class Download extends Observable {
 				status = COMPLETE;
 				stateChanged();
 			}
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			error();
 		} finally {
 			// Close file.
 			if (file != null) {
 				try {
 					file.close();
-				} catch (final Exception e) {
+				} catch (Exception e) {
 				}
 			}
 
@@ -238,111 +308,11 @@ public class Download extends Observable {
 			if (stream != null) {
 				try {
 					stream.close();
-				} catch (final Exception e) {
+				} catch (Exception e) {
 				}
 			}
 		}
 		return status == COMPLETE;
-	}
-
-	// Mark this download as having an error.
-	/**
-	 * Error.
-	 */
-	private void error() {
-		status = ERROR;
-		stateChanged();
-	}
-
-	// Get file name portion of URL.
-	/**
-	 * Gets the file name.
-	 * 
-	 * @param url
-	 *            the url
-	 * @return the file name
-	 */
-	private String getFileName(final URL url) {
-		final String fileName = url.getFile();
-		return fileName.substring(fileName.lastIndexOf('/') + 1);
-	}
-
-	/**
-	 * Gets the path.
-	 * 
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
-	}
-
-	// Get this download's progress.
-	/**
-	 * Gets the progress.
-	 * 
-	 * @return the progress
-	 */
-	public float getProgress() {
-		return ((float) downloaded / size) * 100;
-	}
-
-	// Get this download's size.
-	/**
-	 * Gets the size.
-	 * 
-	 * @return the size
-	 */
-	public int getSize() {
-		return size;
-	}
-
-	// Get this download's status.
-	/**
-	 * Gets the status.
-	 * 
-	 * @return the status
-	 */
-	public int getStatus() {
-		return status;
-	}
-
-	// Get this download's URL.
-	/**
-	 * Gets the url.
-	 * 
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url.toString();
-	}
-
-	// Pause this download.
-	/**
-	 * Pause.
-	 */
-	public void pause() {
-		status = PAUSED;
-		stateChanged();
-	}
-
-	// Resume this download.
-	/**
-	 * Resume.
-	 */
-	public void resume() {
-		status = DOWNLOADING;
-		stateChanged();
-		download();
-	}
-
-	/**
-	 * Sets the path.
-	 * 
-	 * @param path
-	 *            the new path
-	 */
-	public void setPath(final String path) {
-		this.path = path;
 	}
 
 	// Notify observers that this download's status has changed.

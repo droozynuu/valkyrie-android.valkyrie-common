@@ -1,23 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2010 Maciej Kaniewski (mk@firegnom.com).
- * 
- *    This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- * 
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software Foundation,
- *    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
- * 
- *    Contributors:
- *     Maciej Kaniewski (mk@firegnom.com) - initial API and implementation
- ******************************************************************************/
 //////////////////////license & copyright header/////////////////////////
 //                                                                     //
 //    Base64 - encode/decode data using the Base64 encoding scheme     //
@@ -58,34 +38,45 @@ package com.firegnom.valkyrie.util;
  */
 public class Base64 {
 
-	//
-	// code characters for values 0..63
-	//
-	/** The alphabet. */
-	static private char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-			.toCharArray();
+	/**
+	 * returns an array of base64-encoded characters to represent the passed
+	 * data array.
+	 * 
+	 * @param data
+	 *            the array of bytes to encode
+	 * @return base64-coded character array.
+	 */
+	static public char[] encode(byte[] data) {
+		char[] out = new char[((data.length + 2) / 3) * 4];
 
-	//
-	// lookup table for converting base64 characters to value in range 0..63
-	//
-	/** The codes. */
-	static private byte[] codes = new byte[256];
+		//
+		// 3 bytes encode to 4 chars. Output is always an even
+		// multiple of 4 characters.
+		//
+		for (int i = 0, index = 0; i < data.length; i += 3, index += 4) {
+			boolean quad = false;
+			boolean trip = false;
 
-	static {
-		for (int i = 0; i < 256; i++) {
-			codes[i] = -1;
+			int val = (0xFF & (int) data[i]);
+			val <<= 8;
+			if ((i + 1) < data.length) {
+				val |= (0xFF & (int) data[i + 1]);
+				trip = true;
+			}
+			val <<= 8;
+			if ((i + 2) < data.length) {
+				val |= (0xFF & (int) data[i + 2]);
+				quad = true;
+			}
+			out[index + 3] = alphabet[(quad ? (val & 0x3F) : 64)];
+			val >>= 6;
+			out[index + 2] = alphabet[(trip ? (val & 0x3F) : 64)];
+			val >>= 6;
+			out[index + 1] = alphabet[val & 0x3F];
+			val >>= 6;
+			out[index] = alphabet[val & 0x3F];
 		}
-		for (int i = 'A'; i <= 'Z'; i++) {
-			codes[i] = (byte) (i - 'A');
-		}
-		for (int i = 'a'; i <= 'z'; i++) {
-			codes[i] = (byte) (26 + i - 'a');
-		}
-		for (int i = '0'; i <= '9'; i++) {
-			codes[i] = (byte) (52 + i - '0');
-		}
-		codes['+'] = 62;
-		codes['/'] = 63;
+		return out;
 	}
 
 	/**
@@ -97,12 +88,11 @@ public class Base64 {
 	 * characters (newlines and the like) rather than throwing an error. It does
 	 * this by pre-parsing the input and generating from that a count of VALID
 	 * input characters.
-	 * 
-	 * @param data
-	 *            the data
+	 *
+	 * @param data the data
 	 * @return the byte[]
 	 */
-	static public byte[] decode(final char[] data) {
+	static public byte[] decode(char[] data) {
 		// as our input could contain non-BASE64 data (newlines,
 		// whitespace of any sort, whatever) we must first adjust
 		// our count of USABLE data so that...
@@ -129,7 +119,7 @@ public class Base64 {
 			len += 1;
 		}
 
-		final byte[] out = new byte[len];
+		byte[] out = new byte[len];
 
 		int shift = 0; // # of excess bits stored in accum
 		int accum = 0; // excess bits
@@ -137,7 +127,7 @@ public class Base64 {
 
 		// we now go through the entire array (NOT using the 'tempLen' value)
 		for (int ix = 0; ix < data.length; ix++) {
-			final int value = (data[ix] > 255) ? -1 : codes[data[ix]];
+			int value = (data[ix] > 255) ? -1 : codes[data[ix]];
 
 			if (value >= 0) // skip over non-code
 			{
@@ -172,45 +162,33 @@ public class Base64 {
 		return out;
 	}
 
-	/**
-	 * returns an array of base64-encoded characters to represent the passed
-	 * data array.
-	 * 
-	 * @param data
-	 *            the array of bytes to encode
-	 * @return base64-coded character array.
-	 */
-	static public char[] encode(final byte[] data) {
-		final char[] out = new char[((data.length + 2) / 3) * 4];
+	//
+	// code characters for values 0..63
+	//
+	/** The alphabet. */
+	static private char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+			.toCharArray();
 
-		//
-		// 3 bytes encode to 4 chars. Output is always an even
-		// multiple of 4 characters.
-		//
-		for (int i = 0, index = 0; i < data.length; i += 3, index += 4) {
-			boolean quad = false;
-			boolean trip = false;
-
-			int val = (0xFF & data[i]);
-			val <<= 8;
-			if ((i + 1) < data.length) {
-				val |= (0xFF & data[i + 1]);
-				trip = true;
-			}
-			val <<= 8;
-			if ((i + 2) < data.length) {
-				val |= (0xFF & data[i + 2]);
-				quad = true;
-			}
-			out[index + 3] = alphabet[(quad ? (val & 0x3F) : 64)];
-			val >>= 6;
-			out[index + 2] = alphabet[(trip ? (val & 0x3F) : 64)];
-			val >>= 6;
-			out[index + 1] = alphabet[val & 0x3F];
-			val >>= 6;
-			out[index] = alphabet[val & 0x3F];
+	//
+	// lookup table for converting base64 characters to value in range 0..63
+	//
+	/** The codes. */
+	static private byte[] codes = new byte[256];
+	static {
+		for (int i = 0; i < 256; i++) {
+			codes[i] = -1;
 		}
-		return out;
+		for (int i = 'A'; i <= 'Z'; i++) {
+			codes[i] = (byte) (i - 'A');
+		}
+		for (int i = 'a'; i <= 'z'; i++) {
+			codes[i] = (byte) (26 + i - 'a');
+		}
+		for (int i = '0'; i <= '9'; i++) {
+			codes[i] = (byte) (52 + i - '0');
+		}
+		codes['+'] = 62;
+		codes['/'] = 63;
 	}
 
 }
