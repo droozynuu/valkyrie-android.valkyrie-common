@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/105/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/scripting
+END
+Parser.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/105/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/scripting/Parser.java
+END
+SGui.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/105/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/scripting/SGui.java
+END
+SPlayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/105/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/scripting/SPlayer.java
+END
+SGameController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/105/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/scripting/SGameController.java
+END

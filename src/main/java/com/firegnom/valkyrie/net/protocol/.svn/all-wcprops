@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/237/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol
+END
+ChatMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/142/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/ChatMessage.java
+END
+ChatUserJoined.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/146/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/ChatUserJoined.java
+END
+Step.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/142/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/Step.java
+END
+ChatUserLeft.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/146/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/ChatUserLeft.java
+END
+RequestPlayerInfoMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/164/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/RequestPlayerInfoMessage.java
+END
+ChangeGameMode.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/152/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/ChangeGameMode.java
+END
+Path.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/Path.java
+END
+CreateUserMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/164/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/CreateUserMessage.java
+END
+PlayerPositionsMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/187/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerPositionsMessage.java
+END
+PlayerStats.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/237/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerStats.java
+END
+PlayerPositionMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/187/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerPositionMessage.java
+END
+PlayerDisconnected.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/128/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerDisconnected.java
+END
+RequestPlayersPositionMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/187/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/RequestPlayersPositionMessage.java
+END
+PlayerInfoMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/187/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerInfoMessage.java
+END
+PlayerMove.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/172/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/PlayerMove.java
+END
+ConfirmMove.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/protocol/ConfirmMove.java
+END

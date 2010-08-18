@@ -1,0 +1,27 @@
+package com.firegnom.valkyrie.common;
+
+public class Dir {
+  
+  public static final short E = 0;
+  public static final short N = 1;
+  public static final short NE = 2;
+  public static final short NW = 3;
+  public static final short S = 4;
+  public static final short SE = 5;
+  public static final short SW = 6;
+  public static final short W = 7;
+  
+  public static final short dirs = 8;
+  
+  
+  public static final String [] names = {"East","North","Northeast","Nortweast","South","Southeast","Southwest","West"};
+  
+  
+  public static final short LAST = E;
+  
+  public static final short [][] DIR_MATRIX = {
+    {SE,E,NE},
+    {S,E,N},
+    {SW,W,NW}
+  };
+}

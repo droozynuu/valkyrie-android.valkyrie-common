@@ -1,0 +1,42 @@
+package com.firegnom.valkyrie.map;
+
+
+public class Position {
+  
+	public Position(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public Position() {
+		// TODO Auto-generated constructor stub
+	}
+	public int x;
+	public int y;
+	@Override
+	public String toString() {
+		return new StringBuffer().append("Position: (").append(x).append(",").append(y).append(")").toString();
+	}
+	public boolean equals(Position p) {
+	  return ((x == p.x) && (y == p.y));
+	}
+	public boolean equals(int x,int y) {
+    return ((this.x == x) && (this.y == y));
+  }
+	
+	public boolean inRange(Position p,int range){
+    double dx = p.x - x;
+    double dy = p.y - y;
+    double distance = Math.sqrt((dx*dx)+(dy*dy));
+    return  distance <= range;
+  }
+  public void setXY(int x, int y) {
+    this.x = x;
+    this.y = y;
+    
+  }
+	
+	
+
+	
+	
+}

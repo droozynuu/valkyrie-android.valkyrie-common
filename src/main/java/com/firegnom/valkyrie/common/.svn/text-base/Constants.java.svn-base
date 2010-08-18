@@ -1,0 +1,5 @@
+package com.firegnom.valkyrie.common;
+
+public  class Constants {
+  public final static int VISIBILITY_RANGE = 15; 
+}

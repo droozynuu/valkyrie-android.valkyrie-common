@@ -1,0 +1,9 @@
+package com.firegnom.valkyrie.scripting;
+
+public interface Parser {
+
+	public abstract void parse(final String src);
+
+	public abstract void parse(final byte[] src);
+
+}

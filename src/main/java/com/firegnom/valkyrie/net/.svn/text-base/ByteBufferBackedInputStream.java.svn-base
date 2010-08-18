@@ -1,0 +1,45 @@
+package com.firegnom.valkyrie.net;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+
+public class ByteBufferBackedInputStream extends InputStream {
+	ByteBuffer buf;
+
+	public ByteBufferBackedInputStream(ByteBuffer buf) {
+		this.buf = buf;
+	}
+
+	@Override
+	public synchronized int read() throws IOException {
+		if (!buf.hasRemaining()) {
+			return -1;
+		}
+		return buf.get();
+	}
+
+	@Override
+	public synchronized int read(byte[] bytes, int off, int len)
+			throws IOException {
+		len = Math.min(len, buf.remaining());
+		buf.get(bytes, off, len);
+		return len;
+	}
+
+	@Override
+	public int read(byte[] b) throws IOException {
+		return read(b, 0, b.length);
+	}
+	@Override
+	public int available() throws IOException {
+		// TODO Auto-generated method stub
+		return buf.remaining();
+	}
+	@Override
+	public boolean markSupported() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}

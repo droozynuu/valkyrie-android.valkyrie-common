@@ -1,0 +1,55 @@
+package com.firegnom.valkyrie.net;
+
+import java.net.URL;
+import java.util.Observer;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
+
+public class DownloadQueue extends Thread {
+  private static final Logger logger = Logger.getLogger(DownloadQueue.class.getName());
+  LinkedBlockingQueue<URL> downloads;
+  String path;
+  boolean overwrite;
+  Observer o = null;
+
+  public DownloadQueue(String path, boolean overwrite) {
+    logger.info("DownloadQueue created");
+    this.overwrite = overwrite;
+    this.path = path;
+    downloads = new LinkedBlockingQueue<URL>();
+    this.start();
+  }
+
+  public void add(URL url) {
+    if (!downloads.contains(url))
+      downloads.add(url);
+  }
+
+  public void useObserver(Observer o) {
+    this.o = o;
+  }
+  public int size() {
+   return downloads.size();
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      URL file;
+      try {
+        file = downloads.take();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+        return;
+      }
+      Download d;
+      if (o == null) {
+        d = new Download(file, path, overwrite);
+      } else {
+        d = new Download(file, path, overwrite, o);
+      }
+      d.download();
+    }
+  }
+
+}

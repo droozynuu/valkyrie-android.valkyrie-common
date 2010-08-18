@@ -1,0 +1,92 @@
+package com.firegnom.valkyrie.net;
+
+import java.io.DataOutput;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+public class ByteBufferDataOutput implements DataOutput {
+	ByteBuffer bb;
+	
+	public ByteBufferDataOutput(ByteBuffer bb) {
+		this.bb=bb;
+	}
+	
+	
+
+	public void write(int arg0) throws IOException {
+		bb.putInt(arg0);
+
+	}
+
+	public void write(byte[] arg0) throws IOException {
+		bb.put(arg0);
+
+	}
+
+	public void write(byte[] arg0, int arg1, int arg2) throws IOException {
+		bb.put( arg0,  arg1,  arg2);
+
+	}
+
+	public void writeBoolean(boolean arg0) throws IOException {
+		bb.put(arg0?(byte)1:(byte)0);
+	}
+
+	public void writeByte(int arg0) throws IOException {
+		bb.put((byte)arg0);
+	}
+
+	public void writeBytes(String arg0) throws IOException {
+		byte[] bytes = arg0.getBytes("UTF-8"); 
+		int len = bytes.length;
+		bb.putInt(len);
+		for (int i = 0 ; i < len;i++){
+			bb.put(bytes[i]);
+		}
+
+	}
+
+	public void writeChar(int arg0) throws IOException {
+		bb.putChar((char)arg0);
+
+	}
+
+	public void writeChars(String arg0) throws IOException {
+		writeBytes(arg0);
+
+	}
+
+	public void writeDouble(double arg0) throws IOException {
+		bb.putDouble(arg0);
+	}
+
+	public void writeFloat(float arg0) throws IOException {
+		bb.putFloat(arg0);
+	}
+
+	public void writeInt(int arg0) throws IOException {
+		bb.putInt(arg0);
+
+	}
+
+	public void writeLong(long arg0) throws IOException {
+		bb.putLong(arg0);
+
+	}
+
+	public void writeShort(int arg0) throws IOException {
+		bb.putShort((short)arg0);
+	}
+
+	public void writeUTF(String arg0) throws IOException {
+		writeBytes(arg0);
+	}
+
+
+
+	public ByteBuffer getBuffer() {
+		// TODO Auto-generated method stub
+		return bb;
+	}
+
+}

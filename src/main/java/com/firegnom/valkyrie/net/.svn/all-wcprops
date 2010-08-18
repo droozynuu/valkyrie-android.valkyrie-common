@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/237/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net
+END
+ByteBufferBackedOutputStream.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/ByteBufferBackedOutputStream.java
+END
+ByteBufferBackedInputStream.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/ByteBufferBackedInputStream.java
+END
+DownloadQueue.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/176/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/DownloadQueue.java
+END
+ByteBufferDataInput.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/ByteBufferDataInput.java
+END
+Download.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/176/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/Download.java
+END
+AsyncDownload.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/176/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/AsyncDownload.java
+END
+ByteBufferDataOutput.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/112/valkyrie-common/trunk/src/main/java/com/firegnom/valkyrie/net/ByteBufferDataOutput.java
+END

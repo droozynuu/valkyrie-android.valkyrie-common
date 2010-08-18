@@ -1,0 +1,45 @@
+package com.firegnom.valkyrie.net.protocol.helper;
+
+import com.firegnom.valkyrie.net.protocol.ChangeGameMode;
+import com.firegnom.valkyrie.net.protocol.ChatMessage;
+import com.firegnom.valkyrie.net.protocol.ChatUserJoined;
+import com.firegnom.valkyrie.net.protocol.ChatUserLeft;
+import com.firegnom.valkyrie.net.protocol.ConfirmMove;
+import com.firegnom.valkyrie.net.protocol.CreateUserMessage;
+import com.firegnom.valkyrie.net.protocol.PlayerDisconnected;
+import com.firegnom.valkyrie.net.protocol.PlayerInfoMessage;
+import com.firegnom.valkyrie.net.protocol.PlayerMove;
+import com.firegnom.valkyrie.net.protocol.PlayerPositionMessage;
+import com.firegnom.valkyrie.net.protocol.PlayerPositionsMessage;
+import com.firegnom.valkyrie.net.protocol.RequestPlayerInfoMessage;
+import com.firegnom.valkyrie.net.protocol.RequestPlayersPositionMessage;
+
+public interface MessageListener {
+
+	void received(PlayerMove customType);
+
+	void received(ConfirmMove customType);
+
+  void received(PlayerDisconnected customType);
+
+  void received(ChatMessage customType);
+
+  void received(ChatUserJoined customType);
+
+  void received(ChatUserLeft customType);
+
+  void received(CreateUserMessage customType);
+
+  void received(ChangeGameMode customType);
+
+  void received(PlayerPositionMessage customType);
+
+  void received(RequestPlayerInfoMessage customType);
+
+  void received(PlayerInfoMessage customType);
+
+  void received(PlayerPositionsMessage customType);
+
+  void received(RequestPlayersPositionMessage customType);
+
+}

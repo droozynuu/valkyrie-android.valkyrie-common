@@ -1,0 +1,68 @@
+package com.firegnom.valkyrie.scripting;
+
+import com.firegnom.valkyrie.net.protocol.Path;
+
+public interface SPlayer {
+
+	/**Instantly teleports player to specified position on the map
+	 * 
+	 * @param x map position x
+	 * @param y map position y
+	 */
+	public abstract void goTo(int x, int y);
+
+	/**Player try to find a path to given position and go there;
+	 * 
+	 * @param x map position x
+	 * @param y map position y
+	 */
+	public abstract void move(int x, int y);
+	/**Player try to find a path to given position and go there, 
+	 * this is blocking function so it wan't be released until player stops move.
+	 * 
+	 * @param x map position x
+	 * @param y map position y
+	 */
+	public abstract void moveW(int x, int y);
+
+	/**Try to find a path to given position
+	 * 
+	 * @param x map position x
+	 * @param y map position y
+	 * @return true if path was found
+	 */
+	public abstract boolean canReach(int x, int y);
+
+	/**Try to find path to given position
+	 * 
+	 * @param x map position x
+	 * @param y map position y
+	 * @return Path or null if can't find path
+	 */
+	public abstract Path getPath(int x, int y);
+
+	/**Show player position on the map
+	 * 
+	 */
+	public abstract void show();
+	/**Set Player speed the lower number faster speed min is 0 
+	 * 
+	 * @param s speed of the player min is 0
+	 */
+	public abstract void speed(int s);
+	
+	/**Waits untill player finishes moving
+	 * 
+	 */
+	public abstract void waitForMove();
+	
+	/**Gets a distance in pixels from given position
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public abstract int distance(int x,int y);
+	
+
+}

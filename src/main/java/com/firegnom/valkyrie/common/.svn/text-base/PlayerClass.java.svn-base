@@ -1,0 +1,7 @@
+package com.firegnom.valkyrie.common;
+
+public class PlayerClass {
+  public static final String[] NAMES = { "Knight", "Archer", "Barbarian", "Ninja", "Wizard","Rabbit","Cow","Spider","Orc","MushyMan"};
+  public static final String[] IMAGES = { "player_knight", "player_archer", "player_barbarian", "player_ninja", "player_wizard","rabbit","cow","spider","orc","mushyman" };
+
+}

@@ -1,0 +1,26 @@
+package com.firegnom.valkyrie.scripting;
+
+/**This object is responsible for controlling user interaction and dialogs
+ * 
+ * @author firegnom
+ *
+ */
+public interface SGui {
+	/**show a short message which will disappear after a short period of time
+	 * 
+	 * @param msg text of the message
+	 */
+	public abstract void toast(final String msg);
+	
+	/**
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	public abstract boolean question(final String msg);
+	
+	public abstract void info(final String title, final String msg) ;
+	public abstract void info(final String msg) ;
+	
+
+}

@@ -1,0 +1,29 @@
+package com.firegnom.valkyrie.map.pathfinding.heuristics;
+
+import java.io.Serializable;
+
+import com.firegnom.valkyrie.map.pathfinding.AStarHeuristic;
+import com.firegnom.valkyrie.map.pathfinding.Mover;
+import com.firegnom.valkyrie.map.pathfinding.Pathfindable;
+
+
+/**
+ * A heuristic that uses the tile that is closest to the target
+ * as the next best tile.
+ * 
+ * @author Kevin Glass
+ */
+public class ClosestHeuristic implements AStarHeuristic, Serializable {
+	/**
+	 * @see AStarHeuristic#getCost(Pathfindable, Mover, int, int, int, int)
+	 */
+	public float getCost(Pathfindable map, Mover mover, int x, int y, int tx, int ty) {		
+		float dx = tx - x;
+		float dy = ty - y;
+		
+		float result = (float) (Math.sqrt((dx*dx)+(dy*dy)));
+		
+		return result;
+	}
+
+}
