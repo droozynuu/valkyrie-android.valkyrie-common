@@ -53,7 +53,7 @@ public class Protocol implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The Constant MAX_MESSAGE_SIZE. */
-	public static final int MAX_MESSAGE_SIZE = 1024;
+	public static final int MAX_MESSAGE_SIZE = 1024*4;
 
 	/** The VERSION. */
 	private static short VERSION = 7;

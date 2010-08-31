@@ -47,7 +47,7 @@ import java.io.Serializable;
  * @author aled.morris@infomatiq.co.uk
  * @version 1.0b2
  */
-public class Point implements Serializable {
+public class Point implements Serializable,Cloneable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -116,5 +116,13 @@ public class Point implements Serializable {
 	@Override
 	public String toString() {
 		return "Point(" + coordinates[0] + "," + coordinates[1] + ")";
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Point clone() throws CloneNotSupportedException {
+		return new Point(coordinates[0],coordinates[1]);
 	}
 }
